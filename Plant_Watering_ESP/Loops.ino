@@ -9,20 +9,14 @@ void Always_loop()
 void Fast_Loop()
 { 
   server.handleClient(); 
-  //MQTT_loop();
+  MQTT_loop();
 }
 
 
 void Slow_Loop()
 {  
-  //MQTT_publish();
-  Raw_Sensor_Value = get_Raw_SensorValue();
-  Soil_Moisture_Value = get_Converted_SensorValue(Raw_Sensor_Value);
-  
-  Serial.print("Raw_Sensor_Value :");
-  Serial.print(Raw_Sensor_Value);
-  Serial.print("  Soil_Moisture_Value :");
-  Serial.println(Soil_Moisture_Value);
+  Handle_Sensor();
+  MQTT_publish();
 }
 
 

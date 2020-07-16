@@ -8,7 +8,9 @@
   Device            : ESP8266
   
 
-  
+  Status Msg:
+    - Status = 101; // raw sensor value out of caliberation range 
+    
 
 ------------------------------------------- */
 
@@ -52,12 +54,9 @@ String webpage1="";
 
 int Soil_Moisture_Value = 0;
 int Raw_Sensor_Value = 0;
-
 int Status = 0;
-/*
-    Status = 101; // raw sensor value out of caliberation range 
-  
-*/
+
+int PumpState = 0;
 
 
 ESP8266WebServer server(80);
@@ -86,11 +85,13 @@ void setup()
   Serial.print("Connected to ");
   Serial.print(WiFi.SSID());
   Serial.print(", IP Address: ");
-  Serial.println(WiFi.localIP());
+  Serial.print(WiFi.localIP());
+  Serial.print(", MAC: ");
+  Serial.println(WiFi.macAddress());
   
   OTA_Config();
   WebServer_Config();
-  //MQTT_Config();
+  MQTT_Config();
   
   digitalWrite(LED_BUILTIN, HIGH);
   Serial.println("Ready");

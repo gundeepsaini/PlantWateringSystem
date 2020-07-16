@@ -19,7 +19,7 @@ void Prep_webpage1()
   // Start chaning here onwards.....
   String body_table_row01 =String("<tr><td>01</td><td>Soil Moisture Value</td><td>")     + String(Soil_Moisture_Value)  + String("</td><td>%</td></tr>");
   String body_table_row02 =String("<tr><td>02</td><td>Raw Sensor Value</td><td>")        + String(Raw_Sensor_Value)     + String("</td><td>-</td></tr>");
-  //String body_table_row03 =String("<tr><td>03</td><td>Timer: Time left</td><td>") + String("")  +  String("</td><td>mm:ss</td></tr>");  
+  String body_table_row03 =String("<tr><td>03</td><td>Status</td><td>")                  + String(Status)               + String("</td><td>-</td></tr>");  
   //String body_table_row04 =String("<tr><td>04</td><td>City Humidity</td><td>")           + String(City_Humidity)      + String("</td><td>%</td></tr>");
   //String body_table_row05 =String("<tr><td>05</td><td>DHT11 Temperature</td><td>")       + String(DHT_temperature)    + String("</td><td>&#8451;</td></tr>");
   
@@ -30,7 +30,7 @@ void Prep_webpage1()
          body_table_row00 +
          body_table_row01 +
          body_table_row02 +
-         //body_table_row03 +
+         body_table_row03 +
          //body_table_row04 +
          //body_table_row05 +
          body_end; 
