@@ -4,7 +4,6 @@
 
   
   Date              : 16.07.2020
-
   Device            : ESP8266
   
 
