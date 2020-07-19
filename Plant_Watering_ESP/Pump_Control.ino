@@ -1,6 +1,10 @@
 
 
 
+void Pump_Config()
+{
+	pinMode(Water_Pump_Pin, OUTPUT);
+}
 
 
 void Pump_Control()
@@ -15,32 +19,40 @@ void Pump_Control()
 			{	
 				// check for on+off time - 1 cycle
 				if( (millis()/1000 - Pump_ON_Start_time/1000) > (Max_Pump_ON_time + Max_Pump_OFF_time) )
-				{
-					PumpState = 1;
-					digitalWrite(Water_Pump_Pin, PumpState);
-					Pump_ON_Start_time = millis();
+				{					
+					if(Soil_Moisture_Value < 80)
+					{
+						PumpState = 1;
+						digitalWrite(Water_Pump_Pin, PumpState);
+						Pump_ON_Start_time = millis();
 
-					Pump_RunCycles ++;
+						Pump_RunCycles ++;
 					
-					// save time if it is first cycle
-					if(Pump_RunCycles==1)
-						Pump_Cycle_Period_Start_time = millis()/1000;
+						// save time if it is first cycle
+						if(Pump_RunCycles==1)
+							Pump_Cycle_Period_Start_time = millis()/1000;
 
-					Status = 0;	
+						Status = 0;	
+					}
+					Status = Status & 0b1111 1111 1111 0111;        // Bit 3
 				}
-				//else
+				else
 					// Pump off cycle ongoing
-					//Status = 11;	
+					Status = Status | 0b0000 0000 0000 1000;        // Bit 3	
 			}
 			else
 				// Max cycles reached
-				Status = 102;
+				Status = Status | 0b0000 0000 0000 0100;        	// Bit 2
 		}
 	}
 	
 	// Pump is running
 	if(PumpState == 1)
 	{			
+		// Moisture too high
+		if(Soil_Moisture_Value > 80)
+			Pump_OFF();
+
 		// On time complete
 		if(millis() - Pump_ON_Start_time > Max_Pump_ON_time * 1000)		
 			Pump_OFF();
@@ -85,6 +97,7 @@ void Pump_Cycle_Check()
 			Status = 0;	
 			Pump_RunCycles = 0;
 			Pump_Cycle_Period_Start_time = 0;
+			Status = Status & 0b1111 1111 1111 1011;        // Bit 2
 		}
 	}	
 }

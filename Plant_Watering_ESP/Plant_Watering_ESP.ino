@@ -7,9 +7,12 @@
   Device            : ESP8266
   
 
-  Status Msg:
-    - Status = 101; // raw sensor value out of caliberation range 
-    
+  Status Msg: 16 bits
+    - Bit 0: NA
+    - Bit 1: raw sensor value out of caliberation range 
+    - Bit 2: pump cmd running but pump is off as max cycles reached
+    - Bit 3: pump cmd running but pump is in off cycle
+
 
 ------------------------------------------- */
 
@@ -121,6 +124,7 @@ void setup()
   OTA_Config();
   WebServer_Config();
   MQTT_Config();
+  Pump_Config();
   
   digitalWrite(LED_BUILTIN, HIGH);
   Serial.println("Ready");
