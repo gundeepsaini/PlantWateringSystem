@@ -11,7 +11,7 @@ void Pump_Control()
 		if(MQTT_Pump_CMD == 1)
 		{
 			// check for max cycles
-			if(Pump_RunCycles <= Max_Pump_RunCycles)
+			if(Pump_RunCycles < Max_Pump_RunCycles)
 			{	
 				// check for on+off time - 1 cycle
 				if( (millis()/1000 - Pump_ON_Start_time/1000) > (Max_Pump_ON_time + Max_Pump_OFF_time) )
@@ -28,9 +28,9 @@ void Pump_Control()
 
 					Status = 0;	
 				}
-				else
+				//else
 					// Pump off cycle ongoing
-					Status = 11;	
+					//Status = 11;	
 			}
 			else
 				// Max cycles reached
