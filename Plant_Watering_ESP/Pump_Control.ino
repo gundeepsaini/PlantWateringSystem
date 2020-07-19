@@ -1,11 +1,6 @@
 
 
-unsigned long Pump_Cycle_Period_Start_time = 0;
-unsigned long Pump_ON_Start_time = 0;
-int Pump_RunCycles = 0;
-bool PumpState = 0;
-int MQTT_Pump_CMD = 0;
-int Pump_Running_Time_secs=0;
+
 
 
 void Pump_Control()
@@ -29,9 +24,17 @@ void Pump_Control()
 					
 					// save time if it is first cycle
 					if(Pump_RunCycles==1)
-						Pump_Cycle_Period_Start_time = millis()/1000;	
-				}	
+						Pump_Cycle_Period_Start_time = millis()/1000;
+
+					Status = 0;	
+				}
+				else
+					// Pump off cycle ongoing
+					Status = 11;	
 			}
+			else
+				// Max cycles reached
+				Status = 102;
 		}
 	}
 	
@@ -52,8 +55,11 @@ void Pump_Control()
 			Pump_Running_Time_secs = 0;
 
 		//mqtt send time left, pump status, cycle count
-		if(millis()/1000 % 2 == 0)
+		if(millis() - MQTT_PumpMsg_timestamp > 500)
+		{
+		    MQTT_PumpMsg_timestamp = millis();		  
 			MQTT_Msg();		
+		}
 	}
 }
 
@@ -76,6 +82,7 @@ void Pump_Cycle_Check()
 		// reset cycles if time period has elapsed
 		if(millis()/1000 - Pump_Cycle_Period_Start_time > Pump_Cycle_Period)
 		{
+			Status = 0;	
 			Pump_RunCycles = 0;
 			Pump_Cycle_Period_Start_time = 0;
 		}

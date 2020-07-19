@@ -77,6 +77,14 @@ void MQTT_MessageRecd_callback(char* p_topic, byte* p_payload, unsigned int p_le
 
   if (String(MQTT_TOPIC_CMD_PLANT).equals(p_topic)) 
   {
+    if (payload.equals(String("PUMP_ON")))    
+      {
+        MQTT_Pump_CMD = 1;
+      }
+    else
+    {
+       MQTT_Pump_CMD = 0;
+    }
 
   } 
 
@@ -96,7 +104,7 @@ void MQTT_heartbeat()
 void MQTT_Msg()
 {
     // Use arduinojson.org/v6/assistant to compute the capacity.
-    const size_t capacity = JSON_OBJECT_SIZE(6);
+    const size_t capacity = JSON_OBJECT_SIZE(12);
     DynamicJsonDocument doc(capacity);
       
     doc["RawValue"]     = String(Raw_Sensor_Value);

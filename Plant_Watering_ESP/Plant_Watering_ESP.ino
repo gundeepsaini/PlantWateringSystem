@@ -77,9 +77,13 @@ String webpage1="";
 int Soil_Moisture_Value = 0;
 int Raw_Sensor_Value = 0;
 int Status = 0;
-
-int PumpState = 0;
-
+unsigned long Pump_Cycle_Period_Start_time = 0;
+unsigned long Pump_ON_Start_time = 0;
+int Pump_RunCycles = 0;
+bool PumpState = 0;
+int MQTT_Pump_CMD = 0;
+int Pump_Running_Time_secs=0;
+unsigned long MQTT_PumpMsg_timestamp = 0;
 
 ESP8266WebServer server(80);
 
