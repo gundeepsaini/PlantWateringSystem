@@ -77,9 +77,13 @@ void MQTT_MessageRecd_callback(char* p_topic, byte* p_payload, unsigned int p_le
 
   if (String(MQTT_TOPIC_CMD_PLANT).equals(p_topic)) 
   {
+    Serial.print("MQTT CMD:");
+    Serial.println(payload);
+
     if (payload.equals(String("PUMP_ON")))    
       {
         MQTT_Pump_CMD = 1;
+        Serial.println("MQTT Pump start cmd");
       }
     else
     {

@@ -8,10 +8,10 @@
   
 
   Status Msg: 16 bits
-    - Bit 0: NA
-    - Bit 1: raw sensor value out of caliberation range 
-    - Bit 2: pump cmd running but pump is off as max cycles reached
-    - Bit 3: pump cmd running but pump is in off cycle
+    0 - Bit 0: NA
+    2 - Bit 1: raw sensor value out of caliberation range 
+    4 - Bit 2: pump cmd running but pump is off as max cycles reached
+    8 - Bit 3: pump cmd running but pump is in off cycle
 
 
 ------------------------------------------- */
@@ -81,7 +81,7 @@ int Soil_Moisture_Value = 0;
 int Raw_Sensor_Value = 0;
 int Status = 0;
 unsigned long Pump_Cycle_Period_Start_time = 0;
-unsigned long Pump_ON_Start_time = 0;
+unsigned long Pump_ON_Start_time = -100;
 int Pump_RunCycles = 0;
 bool PumpState = 0;
 int MQTT_Pump_CMD = 0;

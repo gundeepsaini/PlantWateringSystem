@@ -28,21 +28,21 @@ void Pump_Control()
 
 						Pump_RunCycles ++;
 					
+						Serial.println("Pump Start");
 						// save time if it is first cycle
 						if(Pump_RunCycles==1)
 							Pump_Cycle_Period_Start_time = millis()/1000;
-
-						Status = 0;	
+							
 					}
-					Status = Status & 0b1111 1111 1111 0111;        // Bit 3
+					Status = Status & 0b1111111111110111;        // Bit 3
 				}
 				else
 					// Pump off cycle ongoing
-					Status = Status | 0b0000 0000 0000 1000;        // Bit 3	
+					Status = Status | 0b0000000000001000;        // Bit 3	
 			}
 			else
 				// Max cycles reached
-				Status = Status | 0b0000 0000 0000 0100;        	// Bit 2
+				Status = Status | 0b0000000000000100;        	// Bit 2
 		}
 	}
 	
@@ -67,7 +67,7 @@ void Pump_Control()
 			Pump_Running_Time_secs = 0;
 
 		//mqtt send time left, pump status, cycle count
-		if(millis() - MQTT_PumpMsg_timestamp > 500)
+		if(millis() - MQTT_PumpMsg_timestamp > 1000)
 		{
 		    MQTT_PumpMsg_timestamp = millis();		  
 			MQTT_Msg();		
@@ -81,6 +81,7 @@ void Pump_OFF()
 	PumpState = 0;
 	digitalWrite(Water_Pump_Pin, PumpState);
 	//Pump_ON_Start_time = 0;
+	Serial.println("Pump Stop");
 
 	MQTT_Msg();	
 }
@@ -97,7 +98,7 @@ void Pump_Cycle_Check()
 			Status = 0;	
 			Pump_RunCycles = 0;
 			Pump_Cycle_Period_Start_time = 0;
-			Status = Status & 0b1111 1111 1111 1011;        // Bit 2
+			Status = Status & 0b1111111111111011;        // Bit 2
 		}
 	}	
 }

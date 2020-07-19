@@ -36,9 +36,9 @@ int get_Converted_SensorValue(int rawValue)
   int Converted_Value = map(rawValue, Caliberation_Value_Air, Caliberation_Value_Water, 0, 100);
 
   if(Converted_Value < 0 || Converted_Value > 100)
-      Status = Status | 0b0000 0000 0000 0010;        // Bit 1
+      Status = Status | 0b0000000000000010;        // Bit 1
   else
-      Status = Status & 0b1111 1111 1111 1101;        // Bit 1
+      Status = Status & 0b1111111111111101;        // Bit 1
 
   return Converted_Value;
 } 
