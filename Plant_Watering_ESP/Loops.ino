@@ -10,6 +10,7 @@ void Fast_Loop()
 { 
   server.handleClient(); 
   MQTT_loop();
+  Pump_Control();
 }
 
 
@@ -17,6 +18,7 @@ void Slow_Loop()
 {  
   Handle_Sensor();
   MQTT_publish();
+  Pump_Cycle_Check();
 }
 
 

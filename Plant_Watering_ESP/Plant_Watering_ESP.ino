@@ -32,6 +32,29 @@ unsigned long looptime_Slow       = 1 * (60);      // in mins
 unsigned long looptime_VerySlow   = 5 * (60);      // in mins
 
 int Soil_Sensor_Pin = A0;
+int Water_Pump_Pin = D5;
+
+// Pump Duty Cycle - for safety 
+int Max_Pump_ON_time    = 10;             // On time  - max seconds the pump will run for in a single cycle
+int Max_Pump_OFF_time   = 50;             // Off time - min seconds the pump will be off for in a single cycle
+int Max_Pump_RunCycles  = 5;              // Max cycles the pump will run for in a fixed period (defined in Max period)
+int Pump_Cycle_Period   = 3 * 60 * 60;    // Fixed period within which pump will run 
+
+/*
+
+To take care of flooding situation in case of bug / software failure
+e.g. 
+  Pump_Cycle_Period   - 3 hours
+  Max_Pump_RunCycles  - 10 cycles
+  Max_Pump_ON_time    - 10 sec
+  Max_Pump_OFF_time   - 50 sec
+
+  (cycle 1) pump runs for 10 sec  ---> pump off for 50 sec 
+  ---> if retrigger reqd ---> (cycle 2) pump runs for 10 sec  ---> pump off for 50 sec
+  on_off cycle repeats max 10 times if required
+  cycle count resets after cycle period 3 hours
+
+*/
 
 int Sampling_Delay  = 50; // delay between sampling of analog read
 int numReadings     = 10; // number of samples per reading
@@ -66,6 +89,9 @@ void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
+
+  // Switch off pump if reset / on start up
+  Pump_OFF();
   
   Serial.begin(115200);
   Serial.println(DeviceHostName);

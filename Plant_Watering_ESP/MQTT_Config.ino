@@ -102,6 +102,10 @@ void MQTT_Msg()
     doc["RawValue"]     = String(Raw_Sensor_Value);
     doc["MoistValue"]   = String(Soil_Moisture_Value);
     doc["Status"]       = String(Status);
+
+    doc["PumpCycles"]   = String(Pump_RunCycles);
+    doc["PumpState"]    = String(PumpState);
+    doc["PumpRunTime"]  = String(Pump_Running_Time_secs);
       
     char data[256];
     serializeJson(doc, data, sizeof(data));
