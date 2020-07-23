@@ -80,14 +80,30 @@ void MQTT_MessageRecd_callback(char* p_topic, byte* p_payload, unsigned int p_le
     Serial.print("MQTT CMD:");
     Serial.println(payload);
 
+    // MQTT Pump start command
     if (payload.equals(String("PUMP_ON")))    
       {
         MQTT_Pump_CMD = 1;
         Serial.println("MQTT Pump start cmd");
-      }
+      }    
     else
     {
-       MQTT_Pump_CMD = 0;
+      // MQTT Pump reset interlock variables
+      if (payload.equals(String("PUMP_RESET")))    
+      {
+        MQTT_Pump_CMD = 0;
+        Pump_RunCycles = 0;
+        Pump_ON_Start_time = 0;
+        Pump_Cycle_Period_Start_time = 0;
+        Status = 0;
+        Serial.println("MQTT Pump reset cycles");
+      }
+      else
+      {
+        // MQTT Pump stop command
+        MQTT_Pump_CMD = 0;
+        Serial.println("MQTT Pump stop cmd");
+      }
     }
 
   } 

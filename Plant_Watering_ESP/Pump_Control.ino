@@ -18,7 +18,7 @@ void Pump_Control()
 			if(Pump_RunCycles < Max_Pump_RunCycles)
 			{	
 				// check for on+off time - 1 cycle
-				if( (millis()/1000 - Pump_ON_Start_time/1000) > (Max_Pump_ON_time + Max_Pump_OFF_time) )
+				if( (millis()/1000 - Pump_ON_Start_time/1000) >= (Max_Pump_ON_time + Max_Pump_OFF_time) )
 				{					
 					if(Soil_Moisture_Value < 80)
 					{
@@ -54,7 +54,7 @@ void Pump_Control()
 			Pump_OFF();
 
 		// On time complete
-		if(millis() - Pump_ON_Start_time > Max_Pump_ON_time * 1000)		
+		if(millis() - Pump_ON_Start_time >= Max_Pump_ON_time * 1000)		
 			Pump_OFF();
 	
 		// MQTT CMD - Pump OFF

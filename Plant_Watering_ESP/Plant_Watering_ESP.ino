@@ -7,8 +7,8 @@
   Device            : ESP8266
   
 
-  Status Msg: 16 bits
-    0 - Bit 0: NA
+  Status Msg: 16 bits    
+    0 - Bit 0: No error
     2 - Bit 1: raw sensor value out of caliberation range 
     4 - Bit 2: pump cmd running but pump is off as max cycles reached
     8 - Bit 3: pump cmd running but pump is in off cycle
@@ -38,8 +38,8 @@ int Soil_Sensor_Pin = A0;
 int Water_Pump_Pin = D5;
 
 // Pump Duty Cycle - for safety 
-int Max_Pump_ON_time    = 10;             // On time  - max seconds the pump will run for in a single cycle
-int Max_Pump_OFF_time   = 50;             // Off time - min seconds the pump will be off for in a single cycle
+int Max_Pump_ON_time    = 5;              // On time  - max seconds the pump will run for in a single cycle
+int Max_Pump_OFF_time   = 25;             // Off time - min seconds the pump will be off for in a single cycle
 int Max_Pump_RunCycles  = 5;              // Max cycles the pump will run for in a fixed period (defined in Max period)
 int Pump_Cycle_Period   = 3 * 60 * 60;    // Fixed period within which pump will run 
 
@@ -181,7 +181,8 @@ void loop()
 
 
 void Restart_ESP()
-{
+{ 
+  Pump_OFF();
   Serial.println("Restarting ESP");
   ESP.restart();
   delay(1000);
