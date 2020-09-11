@@ -96,6 +96,7 @@ void MQTT_MessageRecd_callback(char* p_topic, byte* p_payload, unsigned int p_le
         Pump_ON_Start_time = 0;
         Pump_Cycle_Period_Start_time = 0;
         Status = 0;
+        MQTT_Msg();
         Serial.println("MQTT Pump reset cycles");
       }
       else
