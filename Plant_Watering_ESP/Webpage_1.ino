@@ -16,12 +16,29 @@ void Prep_webpage1()
   String body_table_row00 ="<tr><th>#</th><th>Description</th><th>Value</th><th>Unit</th></tr>";
   String body_end = "</table></body></html>";
 
+  String SensorStatus_temp = "";
+
+  switch(Sensor_Status)
+    {
+      case 1:
+              SensorStatus_temp = String("Good");
+              break;
+      case -10:
+              SensorStatus_temp = String("OutOfRange");
+              break;
+      case 10:
+              SensorStatus_temp = String("CheckPosition");
+              break;              
+    }
+
+
   // Start chaning here onwards.....
   String body_table_row01 =String("<tr><td>01</td><td>Soil Moisture Value</td><td>")     + String(Soil_Moisture_Value)  + String("</td><td>%</td></tr>");
   String body_table_row02 =String("<tr><td>02</td><td>Raw Sensor Value</td><td>")        + String(Raw_Sensor_Value)     + String("</td><td>-</td></tr>");
-  String body_table_row03 =String("<tr><td>03</td><td>Status</td><td>")                  + String(Status)               + String("</td><td>-</td></tr>");  
-  //String body_table_row04 =String("<tr><td>04</td><td>City Humidity</td><td>")           + String(City_Humidity)      + String("</td><td>%</td></tr>");
-  //String body_table_row05 =String("<tr><td>05</td><td>DHT11 Temperature</td><td>")       + String(DHT_temperature)    + String("</td><td>&#8451;</td></tr>");
+  String body_table_row03 =String("<tr><td>02</td><td>CalibrationValue 0%</td><td>")     + String(Caliberation_Value_Air)   + String("</td><td>-</td></tr>");
+  String body_table_row04 =String("<tr><td>02</td><td>CalibrationValue 100%</td><td>")   + String(Caliberation_Value_Water) + String("</td><td>-</td></tr>");
+  String body_table_row05 =String("<tr><td>03</td><td>Sensor Status</td><td>")           + String(SensorStatus_temp)    + String("</td><td>-</td></tr>");  
+  String body_table_row06 =String("<tr><td>03</td><td>Status</td><td>")                  + String(Status)               + String("</td><td>-</td></tr>");    
   
 
   webpage1 = page_head +
@@ -31,8 +48,9 @@ void Prep_webpage1()
          body_table_row01 +
          body_table_row02 +
          body_table_row03 +
-         //body_table_row04 +
-         //body_table_row05 +
+         body_table_row04 +
+         body_table_row05 +
+         body_table_row06 +
          body_end; 
          
 }

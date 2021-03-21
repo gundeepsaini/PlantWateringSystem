@@ -138,8 +138,6 @@ void MQTT_Msg()
     const size_t capacity = JSON_OBJECT_SIZE(12);
     DynamicJsonDocument doc(capacity);
       
-    doc["RawValue"]     = String(Raw_Sensor_Value);
-    doc["MoistValue"]   = String(Soil_Moisture_Value);
     doc["Status"]       = String(Status);
 
     doc["PumpCycles"]   = String(Pump_RunCycles);
