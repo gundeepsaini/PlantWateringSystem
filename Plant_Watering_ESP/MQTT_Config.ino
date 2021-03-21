@@ -161,8 +161,8 @@ void MQTT_Msg_Soil_State()
     const size_t capacity = JSON_OBJECT_SIZE(8);
     DynamicJsonDocument doc(capacity);
       
-    doc["RawValue"]     = String(Raw_Sensor_Value);
-    doc["CalcValue"]    = String(Soil_Moisture_Value);
+    doc["Raw"]     = String(Raw_Sensor_Value);
+    doc["Calc"]    = String(Soil_Moisture_Value);
   
     doc["Min"]     = String(Caliberation_Value_Air);
     doc["Max"]     = String(Caliberation_Value_Water);
@@ -170,13 +170,13 @@ void MQTT_Msg_Soil_State()
     switch(Sensor_Status)
     {
       case 1:
-              doc["SensorStatus"] = String("Good");
+              doc["Status"] = String("Good");
               break;
       case -10:
-              doc["SensorStatus"] = String("OutOfRange");
+              doc["Status"] = String("OutOfRange");
               break;
       case 10:
-              doc["SensorStatus"] = String("CheckPosition");
+              doc["Status"] = String("CheckPosition");
               break;              
     }
 
