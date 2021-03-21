@@ -41,10 +41,19 @@ int get_Converted_SensorValue(int rawValue)
         Sensor_Status = -10;  // indicates out of range
       }
   else
+    {
+      if(Converted_Value < 10 )     // Maybe positioning error or caliberation error
+      {
+        Status = Status | 0b0000000000000010;        // Bit 1
+        Sensor_Status = 10;  /// Maybe positioning error or caliberation error
+      }
+      else
       {
         Status = Status & 0b1111111111111101;        // Bit 1
         Sensor_Status = 1;
       }
+    }      
+
 
   return Converted_Value;
 } 

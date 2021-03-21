@@ -127,7 +127,7 @@ void MQTT_heartbeat()
   if(millis()/1000 - MQTT_heartbeat_timestamp > 300 || MQTT_heartbeat_timestamp==0)
   {
     MQTT_heartbeat_timestamp = millis()/1000;
-    client.publish(MQTT_TOPIC_STATE_PLANT, "Running", true);
+    client.publish(MQTT_TOPIC_STATE1_PLANT, "Running", true);
   }
 }
 
@@ -164,10 +164,18 @@ void MQTT_Msg_Soil_State()
     doc["RawValue"]     = String(Raw_Sensor_Value);
     doc["CalcValue"]   = String(Soil_Moisture_Value);
     
-    if(Sensor_Status == 1)
-      doc["SensorStatus"] = String("Good");
-    else
-      doc["SensorStatus"] = String("OutOfRange");
+    switch(Sensor_Status)
+    {
+      case 1:
+              doc["SensorStatus"] = String("Good");
+              break;
+      case -10:
+              doc["SensorStatus"] = String("OutOfRange");
+              break;
+      case 10:
+              doc["SensorStatus"] = String("CheckPosition");
+              break;              
+    }
 
     char data[256];
     serializeJson(doc, data, sizeof(data));
