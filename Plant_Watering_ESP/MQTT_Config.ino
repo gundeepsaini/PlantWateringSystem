@@ -17,10 +17,14 @@ const char* mqtt_server     = SECRET_MQTT_Server;
 const char* mqtt_user       = SECRET_MQTT_User;
 const char* mqtt_password   = SECRET_MQTT_Pass;
 
-// Motion Sensor
-//#define MQTT_CONFIG_PIR        "homeassistant/sensor/PIR/Kitchen/config"
-#define MQTT_TOPIC_STATE_PLANT  "homeassistant/device/plants/state"
-#define MQTT_TOPIC_CMD_PLANT    "homeassistant/device/plants/cmd"
+
+#define MQTT_TOPIC_STATE_PLANT  "HA/Plant/plants/state"
+#define MQTT_TOPIC_CMD_PLANT    "HA/Plant/plants/cmd"
+
+// Will Topic - Availability
+#define MQTT_TOPIC_WILL        "HA/Plant/status"     // old "homeassistant/sensor/TMR/Kitchen/status"
+#define MQTT_OFFLINE           "Offline"
+#define MQTT_ONLINE            "Active"
 
 
 unsigned long MQTT_heartbeat_timestamp = 0;
@@ -57,12 +61,16 @@ void MQTT_reconnect()
   if (millis()/1000 - lastReconnectAttempt > 30 || lastReconnectAttempt == 0) 
   {
       Serial.println("MQTT reconnecting");
-      if (client.connect(DeviceHostName, mqtt_user, mqtt_password)) 
+      
+      //boolean connect (clientID, [username, password], [willTopic, willQoS, willRetain, willMessage], [cleanSession])
+      if (client.connect(DeviceHostName, mqtt_user, mqtt_password, MQTT_TOPIC_WILL, 1, true, MQTT_OFFLINE)) 
       {
         //MQTT_publish_config();  
-        Serial.println("MQTT connected");
+        Serial.println("MQTT connected");        
+        client.publish(MQTT_TOPIC_WILL, MQTT_ONLINE, true);
         client.subscribe(MQTT_TOPIC_CMD_PLANT);
       }
+
       lastReconnectAttempt = millis()/1000;
   }
 
