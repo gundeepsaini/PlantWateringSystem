@@ -4,6 +4,9 @@
 void Pump_Config()
 {
 	pinMode(Water_Pump_Pin, OUTPUT);
+
+	PumpState = 0;
+	digitalWrite(Water_Pump_Pin, PumpState);
 }
 
 

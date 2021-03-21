@@ -51,6 +51,7 @@ void MQTT_publish()
 {   
     //MQTT_heartbeat();
     MQTT_Msg();
+    MQTT_Msg_Soil_State();
 }
 
 
@@ -144,6 +145,29 @@ void MQTT_Msg()
     doc["PumpState"]    = String(PumpState);
     doc["PumpRunTime"]  = String(Pump_Running_Time_secs);
       
+    char data[256];
+    serializeJson(doc, data, sizeof(data));
+    client.publish(MQTT_TOPIC_STATE_PLANT, data, true);
+    Serial.println(data);
+}
+
+
+
+
+void MQTT_Msg_Soil_State()
+{
+    // Use arduinojson.org/v6/assistant to compute the capacity.
+    const size_t capacity = JSON_OBJECT_SIZE(6);
+    DynamicJsonDocument doc(capacity);
+      
+    doc["RawValue"]     = String(Raw_Sensor_Value);
+    doc["CalcValue"]   = String(Soil_Moisture_Value);
+    
+    if(Sensor_Status == 1)
+      doc["SensorStatus"] = String("Good");
+    else
+      doc["SensorStatus"] = String("OutOfRange");
+
     char data[256];
     serializeJson(doc, data, sizeof(data));
     client.publish(MQTT_TOPIC_STATE_PLANT, data, true);
