@@ -18,7 +18,8 @@ const char* mqtt_user       = SECRET_MQTT_User;
 const char* mqtt_password   = SECRET_MQTT_Pass;
 
 
-#define MQTT_TOPIC_STATE_PLANT  "HA/Plant/plants/state"
+#define MQTT_TOPIC_STATE1_PLANT  "HA/Plant/plants/state1"
+#define MQTT_TOPIC_STATE2_PLANT  "HA/Plant/plants/state2"
 #define MQTT_TOPIC_CMD_PLANT    "HA/Plant/plants/cmd"
 
 // Will Topic - Availability
@@ -147,7 +148,7 @@ void MQTT_Msg()
       
     char data[256];
     serializeJson(doc, data, sizeof(data));
-    client.publish(MQTT_TOPIC_STATE_PLANT, data, true);
+    client.publish(MQTT_TOPIC_STATE1_PLANT, data, true);
     Serial.println(data);
 }
 
@@ -170,6 +171,6 @@ void MQTT_Msg_Soil_State()
 
     char data[256];
     serializeJson(doc, data, sizeof(data));
-    client.publish(MQTT_TOPIC_STATE_PLANT, data, true);
+    client.publish(MQTT_TOPIC_STATE2_PLANT, data, true);
     Serial.println(data);
 }
