@@ -158,12 +158,15 @@ void MQTT_Msg()
 void MQTT_Msg_Soil_State()
 {
     // Use arduinojson.org/v6/assistant to compute the capacity.
-    const size_t capacity = JSON_OBJECT_SIZE(6);
+    const size_t capacity = JSON_OBJECT_SIZE(8);
     DynamicJsonDocument doc(capacity);
       
     doc["RawValue"]     = String(Raw_Sensor_Value);
-    doc["CalcValue"]   = String(Soil_Moisture_Value);
-    
+    doc["CalcValue"]    = String(Soil_Moisture_Value);
+  
+    doc["Min"]     = String(Caliberation_Value_Air);
+    doc["Max"]     = String(Caliberation_Value_Water);
+
     switch(Sensor_Status)
     {
       case 1:
