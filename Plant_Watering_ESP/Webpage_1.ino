@@ -35,10 +35,10 @@ void Prep_webpage1()
   // Start chaning here onwards.....
   String body_table_row01 =String("<tr><td>01</td><td>Soil Moisture Value</td><td>")     + String(Soil_Moisture_Value)  + String("</td><td>%</td></tr>");
   String body_table_row02 =String("<tr><td>02</td><td>Raw Sensor Value</td><td>")        + String(Raw_Sensor_Value)     + String("</td><td>-</td></tr>");
-  String body_table_row03 =String("<tr><td>02</td><td>CalibrationValue 0%</td><td>")     + String(Caliberation_Value_Air)   + String("</td><td>-</td></tr>");
-  String body_table_row04 =String("<tr><td>02</td><td>CalibrationValue 100%</td><td>")   + String(Caliberation_Value_Water) + String("</td><td>-</td></tr>");
-  String body_table_row05 =String("<tr><td>03</td><td>Sensor Status</td><td>")           + String(SensorStatus_temp)    + String("</td><td>-</td></tr>");  
-  String body_table_row06 =String("<tr><td>03</td><td>Status</td><td>")                  + String(Status)               + String("</td><td>-</td></tr>");    
+  String body_table_row03 =String("<tr><td>03</td><td>CalibrationValue 0%</td><td>")     + String(Caliberation_Value_Air)   + String("</td><td>-</td></tr>");
+  String body_table_row04 =String("<tr><td>04</td><td>CalibrationValue 100%</td><td>")   + String(Caliberation_Value_Water) + String("</td><td>-</td></tr>");
+  String body_table_row05 =String("<tr><td>05</td><td>Sensor Status</td><td>")           + String(SensorStatus_temp)    + String("</td><td>-</td></tr>");  
+  String body_table_row06 =String("<tr><td>06</td><td>Status</td><td>")                  + String(Status)               + String("</td><td>-</td></tr>");    
   
 
   webpage1 = page_head +
