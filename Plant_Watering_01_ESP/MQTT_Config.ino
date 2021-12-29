@@ -2,7 +2,7 @@
 
 /******************** LIB **************************************/
 #define MQTT_MAX_PACKET_SIZE 1024  // < ----- Change in lib: This is because the defaul maxium length is 128b. So just go to PubSubClient.h and change #define MQTT_MAX_PACKET_SIZE 128 to #define MQTT_MAX_PACKET_SIZE 1024
-#include <PubSubClient.h>
+#include "src/pubsubclient/PubSubClient.h"
 #include <ArduinoJson.h>
 
 
@@ -18,12 +18,12 @@ const char* mqtt_user       = SECRET_MQTT_User;
 const char* mqtt_password   = SECRET_MQTT_Pass;
 
 
-#define MQTT_TOPIC_STATE1_PLANT  "HA/Plant/plants/state1"
-#define MQTT_TOPIC_STATE2_PLANT  "HA/Plant/plants/state2"
-#define MQTT_TOPIC_CMD_PLANT    "HA/Plant/plants/cmd"
+#define MQTT_TOPIC_STATE1_PLANT  "HA/PlantSensorSystem01/state1"
+#define MQTT_TOPIC_STATE2_PLANT  "HA/PlantSensorSystem01/state2"
+#define MQTT_TOPIC_CMD_PLANT     "HA/PlantSensorSystem01/cmd"
 
 // Will Topic - Availability
-#define MQTT_TOPIC_WILL        "HA/Plant/status"     // old "homeassistant/sensor/TMR/Kitchen/status"
+#define MQTT_TOPIC_WILL        "HA/PlantSensorSystem01/status"    
 #define MQTT_OFFLINE           "Offline"
 #define MQTT_ONLINE            "Active"
 

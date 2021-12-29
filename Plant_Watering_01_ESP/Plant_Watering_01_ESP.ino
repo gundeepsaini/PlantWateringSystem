@@ -14,31 +14,6 @@
     8 - Bit 3: pump cmd running but pump is in off cycle
 
 
-------------------------------------------- */
-
-
-
-
-
-/* ------------- LIB ------------------------------ */
-#include "Secrets.h"
-#include <ArduinoOTA.h>
-#include <ESP8266WebServer.h>
-#include <Arduino.h>
-
-
-/* ------------- CONFIG VAR ------------------------------ */
-unsigned long looptime_Fast = 1;    // in secs
-unsigned long looptime_Mid1 = 1;    // in secs
-unsigned long looptime_Mid2 = 10;   // in secs
-unsigned long looptime_Slow       = 1 * (60);      // in mins
-unsigned long looptime_VerySlow   = 5 * (60);      // in mins
-
-int Soil_Sensor_Pin   = A0;
-int Water_Pump_Pin    = D5;
-
-/*
-
 Explanation of Pump settings: Takes care of flooding situation in case of bug / software failure
 e.g.   
   Max_Pump_ON_time    - 10 sec
@@ -53,7 +28,30 @@ e.g.
   on_off cycle repeats max 10 times (10 cycles) if required
   cycle count resets after cycle period 3 hours
 
-*/
+
+------------------------------------------- */
+
+
+
+
+
+/* ------------- LIB ------------------------------ */
+#include "Secrets.h"
+
+#include <ArduinoOTA.h>
+#include <ESP8266WebServer.h>
+
+
+
+/* ------------- CONFIG VAR ------------------------------ */
+unsigned long looptime_Fast = 1;    // in secs
+unsigned long looptime_Mid1 = 1;    // in secs
+unsigned long looptime_Mid2 = 10;   // in secs
+unsigned long looptime_Slow       = 1 * (60);      // in mins
+unsigned long looptime_VerySlow   = 30 * (60);      // in mins
+
+int Soil_Sensor_Pin   = A0;
+int Water_Pump_Pin    = D5;
 
 // Pump Duty Cycle - for safety 
 int Max_Pump_ON_time    = 5;              // On time  - max seconds the pump will run for in a single cycle
@@ -70,8 +68,8 @@ int Caliberation_Value_Water  = 285;  // 100% soil moisture
 
 
 /* ------------- VAR ------------------------------ */
-const char* ssid             = SECRET_WIFI_SSID2;
-const char* pass             = SECRET_WIFI_PASS2;
+const char* ssid             = SECRET_WIFI_SSID3;
+const char* pass             = SECRET_WIFI_PASS3;
 const char* DeviceHostName   = SECRET_Device_Name8;
 const char* OTA_Password     = SECRET_Device_OTA_PASS; 
 
@@ -130,6 +128,7 @@ void setup()
   OTA_Config();
   WebServer_Config();
   MQTT_Config();
+  Config_Time();
   
   digitalWrite(LED_BUILTIN, HIGH);
   Serial.println("Ready");
@@ -147,7 +146,7 @@ void loop()
     Fast_Loop();
   }
 
-/*
+
   // Mid1 Loop
  if(!OTA_Mode && ((millis()/1000 - lastrun_Mid1 > looptime_Mid1) || lastrun_Mid1 ==0))
   {
@@ -162,7 +161,7 @@ void loop()
     lastrun_Mid2 = millis()/1000;
     Mid2_Loop();
   }
-*/
+
   // Slow Loop
  if(!OTA_Mode && ((millis()/1000 - lastrun_slow > looptime_Slow) || lastrun_slow ==0))
   {
@@ -170,7 +169,6 @@ void loop()
     Slow_Loop();
   }
 
-/*
 
     // Very Slow Loop
  if(!OTA_Mode && ((millis()/1000 - lastrun_Veryslow > looptime_VerySlow) || lastrun_Veryslow ==0))
@@ -179,7 +177,6 @@ void loop()
     VerySlow_Loop();
   }
 
-*/
 }
 
 

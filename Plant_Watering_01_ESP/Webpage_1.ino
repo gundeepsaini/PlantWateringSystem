@@ -9,10 +9,13 @@
 
 void Prep_webpage1()
 {
+  
+  String timeStr = timeClient.getFormattedTime();
+
     // !!! ELements that don't change !!!
   String page_head ="<!DOCTYPE html><html><head><style>td,th{ border: 1px solid #dddddd; text-align: left; padding: 8px;} tr:nth-child(even){background-color: #dddddd;}</style></head>";
   String body_start = "<body>";
-  String body_table_start = String("<h2>") + DeviceHostName + String("</h2><h4>Updated millis: ") + String(millis()) + String("</h4><table>");
+  String body_table_start = String("<h2>") + DeviceHostName + String("</h2><h4>Updated: ") + timeStr + String("</h4><table>");
   String body_table_row00 ="<tr><th>#</th><th>Description</th><th>Value</th><th>Unit</th></tr>";
   String body_end = "</table></body></html>";
 

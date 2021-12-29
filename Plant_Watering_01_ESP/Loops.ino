@@ -39,5 +39,5 @@ void Mid2_Loop()
 
 void VerySlow_Loop()
 {
-  
+  Time_NTP_Update();
 }
